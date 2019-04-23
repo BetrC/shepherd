@@ -8,45 +8,42 @@ using UnityEngine;
 class GroupMod : UnitySingleton<GroupMod>
 {
 
-    public List<Vector2> Sheeps;
-    public List<GameObject> Objs;
+    public List<Vector2> sheeps;
+    public List<GameObject> objs;
 
-    private List<Vector2> Inertia;
-    private List<Vector2> MatS;
-    private List<Vector2> MatA;
-    private List<Vector2> MatC;
-    private List<Vector2> MatNoise;
+    private List<Vector2> matS;
+    private List<Vector2> matA;
+    private List<Vector2> matC;
+    private List<Vector2> matNoise;
 
+
+    public float time = 0;
 
     private void Start()
     {
         Debug.Log("开始生成羊群");
-        if (Sheeps == null)
+        if (sheeps == null)
         {
-            Sheeps = new List<Vector2>();
+            sheeps = new List<Vector2>();
         }
-        if (Objs == null)
+        if (objs == null)
         {
-            Objs = new List<GameObject>();
-        }
-        if (Inertia == null)
-        {
-            Inertia = Enumerable.Repeat(Vector2.zero, Config.N).ToList();
+            objs = new List<GameObject>();
         }
         Init();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         var matH = GetH();
-        for (int i = 0; i < Sheeps.Count; i++)
+        for (int i = 0; i < sheeps.Count; i++)
         {
-            Sheeps[i] += Config.sheepSpeed * matH[i];
-            Inertia[i] = matH[i];
-            Objs[i].transform.position = new Vector3(Sheeps[i].x, Sheeps[i].y, 0);
+            objs[i].GetComponent<Sheep>().Action(matH[i]);
+            sheeps[i] = new Vector2(objs[i].transform.position.x, objs[i].transform.position.y);
         }
+        time += Time.fixedDeltaTime;
     }
-     
+
     private void Init()
     {
         GameObject prefab = Resources.Load<GameObject>("Prefabs/sheep") as GameObject;
@@ -57,38 +54,40 @@ class GroupMod : UnitySingleton<GroupMod>
             float y = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPoint.y;
             GameObject go = Instantiate(prefab, new Vector3(x, y, 0), Quaternion.identity);
             go.name = "" + i;
-            Sheeps.Add(new Vector2(x, y));
-            Objs.Add(go);
+            sheeps.Add(new Vector2(x, y));
+            objs.Add(go);
         }
     }
 
     public List<Vector2> GetH()
     {
-        List<Vector2> matH = Enumerable.Repeat(Vector2.zero, Sheeps.Count).ToList();
+        List<Vector2> matH = Enumerable.Repeat(Vector2.zero, sheeps.Count).ToList();
 
-        MatS = GetS();
-        MatA = GetA();
-        MatC = GetC();
-        MatNoise = GetNoise();
+        this.matS = GetS();
+        this.matA = GetA();
+        this.matC = GetC();
+        this.matNoise = GetNoise();
 
-        for (int i = 0; i < Sheeps.Count; i++)
+        for (int i = 0; i < sheeps.Count; i++)
         {
-            matH[i] = Config.h * Inertia[i] + Config.Ro_s * MatS[i] + Config.e * MatNoise[i] + Config.c * MatC[i] + Config.Ro_a * MatA[i];
+            matH[i] = Config.Ro_s * matS[i] + Config.e * matNoise[i] + Config.c * matC[i] + Config.Ro_a * matA[i];
             matH[i] = matH[i].normalized;
-            //Debug.Log("第" + i + "个： S : " + MatS[i].ToString() + "\n Noise : " + MatNoise[i].ToString() +
-            //    "\n C : " + MatC[i].ToString() + "\n Inertia : " + Inertia[i].ToString() + "\n A : " + MatA[i].ToString());
         }
         return matH;
     }
 
     private List<Vector2> GetS()
     {
-        var matS = Enumerable.Repeat(Vector2.zero, Sheeps.Count).ToList();
-        Vector3 vec = Manager.Instance.shepherd.transform.position;
-        Vector2 pos = new Vector2(vec.x, vec.y);
-        for (int i = 0; i < Sheeps.Count; i++)
+        var matS = Enumerable.Repeat(Vector2.zero, sheeps.Count).ToList();
+        if (Generator.Instance.shepherd == null)
         {
-            Vector2 temp = Sheeps[i] - pos;
+            return matS;
+        }
+        Vector3 vec = Generator.Instance.shepherd.transform.position;
+        Vector2 pos = new Vector2(vec.x, vec.y);
+        for (int i = 0; i < sheeps.Count; i++)
+        {
+            Vector2 temp = sheeps[i] - pos;
             matS[i] = temp.magnitude < Config.R_s ? temp : Vector2.zero;
             matS[i] = matS[i].normalized;
         }
@@ -98,8 +97,8 @@ class GroupMod : UnitySingleton<GroupMod>
     private List<Vector2> GetA()
     {
         // 羊群排斥力计算方式为计算与当前羊只邻近的羊群对其排斥力的合力
-        var matA = Enumerable.Repeat(Vector2.zero, Sheeps.Count).ToList();
-        for (int i = 0; i < Sheeps.Count; i++)
+        var matA = Enumerable.Repeat(Vector2.zero, sheeps.Count).ToList();
+        for (int i = 0; i < sheeps.Count; i++)
         {
             //var query = from s in Sheeps
             //            where (Sheeps[i] - s).magnitude < Config.R_a
@@ -107,9 +106,9 @@ class GroupMod : UnitySingleton<GroupMod>
             //Debug.Log(query.ToList<Vector2>().ToString());
 
             var temp = new List<Vector2>();
-            foreach (var s in Sheeps)
+            foreach (var s in sheeps)
             {
-                Vector2 vec = Sheeps[i] - s;
+                Vector2 vec = sheeps[i] - s;
                 if (vec.magnitude < Config.R_a)
                 {
                     temp.Add(vec);
@@ -124,13 +123,13 @@ class GroupMod : UnitySingleton<GroupMod>
     private List<Vector2> GetC()
     {
         // 羊群中心吸引力只有在羊只在牧羊犬巡视范围的时候才会有
-        var matC = Enumerable.Repeat(Vector2.zero, Sheeps.Count).ToList();
+        var matC = Enumerable.Repeat(Vector2.zero, sheeps.Count).ToList();
         Vector2 GCM = GetGCM();
-        for (int i = 0; i < Sheeps.Count; i++)
+        for (int i = 0; i < sheeps.Count; i++)
         {
-            if (Vector2.zero != MatS[i])
+            if (Vector2.zero != matS[i])
             {
-                matC[i] = GCM - Sheeps[i];
+                matC[i] = GCM - sheeps[i];
                 matC[i] = matC[i].normalized;
             }
         }
@@ -140,8 +139,8 @@ class GroupMod : UnitySingleton<GroupMod>
     private List<Vector2> GetNoise()
     {
         // 噪声以一定概率出现
-        var matNoise = Enumerable.Repeat(Vector2.zero, Sheeps.Count).ToList();
-        for (int i = 0; i < Sheeps.Count; i++)
+        var matNoise = Enumerable.Repeat(Vector2.zero, sheeps.Count).ToList();
+        for (int i = 0; i < sheeps.Count; i++)
         {
             float p = Random.Range(0.0f, 1.0f);
             if (p <= Config.p)
@@ -156,7 +155,7 @@ class GroupMod : UnitySingleton<GroupMod>
 
     public Vector2 GetGCM()
     {
-        return Mean(Sheeps);
+        return Mean(sheeps);
     }
 
     private Vector2 Mean(List<Vector2> vec)
@@ -176,11 +175,11 @@ class GroupMod : UnitySingleton<GroupMod>
     /// </summary>
     private void RefreshAgents()
     {
-        Sheeps.Clear();
+        sheeps.Clear();
         // 获取点坐标集
-        foreach (var obj in Objs)
+        foreach (var obj in objs)
         {
-            Sheeps.Add(new Vector2(obj.transform.position.x, obj.transform.position.y));
+            sheeps.Add(new Vector2(obj.transform.position.x, obj.transform.position.y));
         }
     }
 
@@ -192,11 +191,11 @@ class GroupMod : UnitySingleton<GroupMod>
     {
         Vector2 GCM = GetGCM();
         // TODO 重复获取参数 未变变量应设为全局
-        Vector3 point = Manager.Instance.targetPoint;
-        Vector2 target = new Vector2(point.x, point.y);
+        Vector3 temp = Generator.Instance.target.transform.position;
+        Vector2 vec = new Vector2(temp.x, temp.y);
 
         // 5是一个暂定参数
-        if ((GCM - target).magnitude <= 5)
+        if ((GCM - vec).magnitude <= 5)
         {
             return true;
         }
@@ -211,7 +210,7 @@ class GroupMod : UnitySingleton<GroupMod>
     {
         Vector2 GCM = GetGCM();
         float fn = Config.R_a * Mathf.Sqrt(Config.N);
-        foreach (var a in Sheeps)
+        foreach (var a in sheeps)
         {
             if ((a - GCM).magnitude > fn)
             {
@@ -226,7 +225,7 @@ class GroupMod : UnitySingleton<GroupMod>
         Vector2 furthest = Vector2.zero;
         float max = 0;
         Vector2 GCM = GetGCM();
-        foreach (var agent in Sheeps)
+        foreach (var agent in sheeps)
         {
             float d = (agent - GCM).magnitude;
             if (d > max)
@@ -242,10 +241,10 @@ class GroupMod : UnitySingleton<GroupMod>
     {
         // Vector2 nearest = Vector2.zero;
         float min = float.MaxValue;
-        Vector2 shepherd = Manager.Instance.shepherd.transform.position;
-        foreach (var agent in Sheeps)
+        Vector2 vec = Generator.Instance.shepherd.transform.position;
+        foreach (var agent in sheeps)
         {
-            float d = (agent - shepherd).magnitude;
+            float d = (agent - vec).magnitude;
             if (d < min)
             {
                 // nearest = agent;
@@ -253,6 +252,18 @@ class GroupMod : UnitySingleton<GroupMod>
             }
         }
         return min;
+    }
+
+    public void Reset()
+    {
+        // 重定位羊群位置
+        for (int i = 0; i < Config.N; i++)
+        {
+            float x = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPoint.x;
+            float y = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPoint.y;
+            objs[i].transform.position = new Vector3(x, y, 0);
+        }
+        time = 0;
     }
 }
 

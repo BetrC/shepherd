@@ -52,11 +52,11 @@ public class Shepherd : MonoBehaviour
     private Vector2 DrivingPosition()
     {
         Vector2 GCM = GroupMod.Instance.GetGCM();
-        Vector2 target = Manager.Instance.targetPoint;
+        Vector2 target = Generator.Instance.targetPoint;
         Vector2 vec = GCM - target;
         vec.Normalize();
 
-        return GCM + vec * (Config.R_a * Mathf.Sqrt(Config.N));
+        return GCM + vec * (2 * Config.R_a * Mathf.Sqrt(Config.N));
     }
 
 

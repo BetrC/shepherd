@@ -94,4 +94,9 @@ public class Config
     /// </summary>
     public static float beta = 180;
     #endregion
+
+    #region
+    public static bool useML = false;
+
+    #endregion
 }

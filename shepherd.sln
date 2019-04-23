@@ -1,7 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{F848B73A-A6E8-AB4E-EF69-E69D2D909456}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacBLAS", "MacBLAS.csproj", "{69FB5AE4-F60A-5050-D72B-7FFA480FC86A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iOSBLAS", "iOSBLAS.csproj", "{C2091294-F2B5-0BDC-E772-15A8AC5492A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{39D79DFB-4684-D86B-BD1F-612D78BA41E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,8 +19,23 @@ Global
 		{F848B73A-A6E8-AB4E-EF69-E69D2D909456}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F848B73A-A6E8-AB4E-EF69-E69D2D909456}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F848B73A-A6E8-AB4E-EF69-E69D2D909456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69FB5AE4-F60A-5050-D72B-7FFA480FC86A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69FB5AE4-F60A-5050-D72B-7FFA480FC86A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69FB5AE4-F60A-5050-D72B-7FFA480FC86A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69FB5AE4-F60A-5050-D72B-7FFA480FC86A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2091294-F2B5-0BDC-E772-15A8AC5492A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2091294-F2B5-0BDC-E772-15A8AC5492A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2091294-F2B5-0BDC-E772-15A8AC5492A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2091294-F2B5-0BDC-E772-15A8AC5492A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D79DFB-4684-D86B-BD1F-612D78BA41E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D79DFB-4684-D86B-BD1F-612D78BA41E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D79DFB-4684-D86B-BD1F-612D78BA41E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D79DFB-4684-D86B-BD1F-612D78BA41E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal

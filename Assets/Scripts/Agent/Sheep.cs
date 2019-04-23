@@ -17,6 +17,12 @@ public class Sheep : MonoBehaviour
     {
     }
 
+    public void Action(Vector2 vec)
+    {
+        Inertia = Config.h * Inertia + vec;
+        transform.position += new Vector3(Inertia.x, Inertia.y, 0);
+    }
+
     ///// <summary>
     ///// 获取合力
     ///// </summary>
