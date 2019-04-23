@@ -282,8 +282,6 @@ C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\obj\Debug\Assembly-CSharp.dll
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\obj\Debug\Assembly-CSharp.pdb
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\ArrayFire.dll
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\Barracuda.dll
-C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\ChannelPurchase.dll
-C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\Editor.dll
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\Google.Protobuf.dll
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\Grpc.Core.dll
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\NumSharp.Core.dll
@@ -291,12 +289,8 @@ C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\System.Interactive.A
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\System.IO.Abstractions.dll
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\System.IO.Abstractions.TestingHelpers.dll
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\UnityEngine.SpatialTrackingModule.dll
-C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\UnityStore.dll
-C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\XiaomiSupport.dll
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\UnityEditor.UI.dll
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\MacBLAS.pdb
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\iOSBLAS.pdb
-C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\Editor.pdb
-C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\XiaomiSupport.pdb
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\UnityEngine.SpatialTrackingModule.xml
 C:\Users\cjkxj\OneDrive\0-4-2\Unity\shepherd\Temp\bin\Debug\UnityEditor.UI.xml

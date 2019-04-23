@@ -12,7 +12,7 @@ class Function
     /// </summary>
     /// <param name="vec"></param>
     /// <returns></returns>
-    public static double[] Vec3ToNDArray(Vector3 vec)
+    public static double[] Vec3ToArray(Vector3 vec)
     {
         double[] arr = { vec.x, vec.y };
         return arr;
@@ -23,7 +23,7 @@ class Function
     /// </summary>
     /// <param name="vec"></param>
     /// <returns></returns>
-    public static double[] Vec2ToNDArray(Vector2 vec)
+    public static double[] Vec2ToArray(Vector2 vec)
     {
         double[] arr = { vec.x, vec.y };
         return arr;
@@ -37,7 +37,8 @@ class Function
     /// <returns></returns>
     public static Vector3 NDArrayToVec3(NDArray nd)
     {
-        (double x, double y) = (nd[0], nd[1]);
+        double[] arr = nd.Array as double[];
+        (double x, double y) = (arr[0], arr[1]);
         return new Vector3(Convert.ToSingle(x), Convert.ToSingle(y), 0);
     }
 
@@ -64,22 +65,6 @@ class Function
         return res;
     }
 
-    public static NDArray Adjust(NDArray nd, float dis)
-    {
-        var res = np.zeros(nd.shape);
-        for (int i = 0; i < nd.shape[0]; i++)
-        {
-            Vector3 vec = NDArrayToVec3(nd[i]);
-            if (vec.magnitude < dis)
-            {
-                vec.Normalize();
-                double[] arr = Vec3ToNDArray(vec);
-                (res[i, 0], res[i, 1]) = (arr[0], arr[1]);
-            }
-        }
-        return res;
-    }
-
 
     /// <summary>
     /// 矩阵每行标准化
@@ -91,7 +76,7 @@ class Function
         for (int i = 0; i < nd.shape[0]; i++)
         {
             Vector3 vec = NDArrayToVec3(nd[i]).normalized;
-            double[] arr = Vec3ToNDArray(vec);
+            double[] arr = Vec3ToArray(vec);
             (nd[i, 0], nd[i, 1]) = (arr[0], arr[1]);
         }
     }

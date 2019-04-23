@@ -1,26 +1,22 @@
-﻿using UnityEngine;
+﻿using NumSharp;
+using UnityEngine;
 /// <summary>
 /// 羊只相关类
 /// </summary>
 public class Sheep : MonoBehaviour
 {
 
-    private Vector2 Inertia = Vector2.zero;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
+    private Vector2 inertia = Vector2.zero;
 
     public void Action(Vector2 vec)
     {
-        Inertia = Config.h * Inertia + vec;
-        transform.position += new Vector3(Inertia.x, Inertia.y, 0);
+        inertia = Config.h * inertia + vec;
+        transform.position += new Vector3(inertia.x, inertia.y, 0);
+    }
+
+    public void MatAction(NDArray nd)
+    {
+        transform.position = Function.NDArrayToVec3(nd);
     }
 
     ///// <summary>

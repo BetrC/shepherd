@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ class GroupMod : UnitySingleton<GroupMod>
 
     private void Start()
     {
-        Debug.Log("开始生成羊群");
+        UnityEngine.Debug.Log("开始生成羊群");
         if (sheeps == null)
         {
             sheeps = new List<Vector2>();
@@ -35,7 +36,12 @@ class GroupMod : UnitySingleton<GroupMod>
 
     private void FixedUpdate()
     {
+        // 性能统计
+        var watch = Stopwatch.StartNew();
         var matH = GetH();
+        watch.Stop();
+        var elapsed = watch.Elapsed;
+        UnityEngine.Debug.Log(elapsed);
         for (int i = 0; i < sheeps.Count; i++)
         {
             objs[i].GetComponent<Sheep>().Action(matH[i]);

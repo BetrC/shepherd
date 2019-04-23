@@ -67,7 +67,10 @@ class Test
         var mean = Function.Mean(nd);
         Debug.Log(mean);
         ////////////////////////////////////Test Mean()////////////////////////////////////////
-        
+
+        Vector3 GCM = Function.NDArrayToVec3(mean);
+        Debug.Log(GCM);
+
 
 
     }

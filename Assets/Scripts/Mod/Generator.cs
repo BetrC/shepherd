@@ -27,7 +27,6 @@ public class Generator : UnitySingleton<Generator>
         // 添加牧羊犬
         go = AgentFactory.GetAgent();
         shepherd = Instantiate(go, shepherdPoint, Quaternion.identity);
-
     }
 
     public void ReSet()

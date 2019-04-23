@@ -10,10 +10,15 @@ public class Shepherd : MonoBehaviour
     private Vector3 lastMousePosition = Vector3.zero;
 
     private Vector2 Inertia = Vector2.zero;
+
+    #region Instances
+    private GroupMod groupMod;
+    #endregion
+
     // Use this for initialization
     void Start()
     {
-
+        groupMod = GroupMod.Instance;
     }
 
     // Update is called once per frame
@@ -51,7 +56,7 @@ public class Shepherd : MonoBehaviour
 
     private Vector2 DrivingPosition()
     {
-        Vector2 GCM = GroupMod.Instance.GetGCM();
+        Vector2 GCM = groupMod.GetGCM();
         Vector2 target = Generator.Instance.targetPoint;
         Vector2 vec = GCM - target;
         vec.Normalize();
@@ -62,8 +67,8 @@ public class Shepherd : MonoBehaviour
 
     private Vector2 CollectPosition()
     {
-        Vector2 furthest = GroupMod.Instance.GetFurthestSheep();
-        Vector2 GCM = GroupMod.Instance.GetGCM();
+        Vector2 furthest = groupMod.GetFurthestSheep();
+        Vector2 GCM = groupMod.GetGCM();
         Vector2 vec = furthest - GCM;
         vec.Normalize();
 
@@ -76,7 +81,7 @@ public class Shepherd : MonoBehaviour
     /// <returns></returns>
     private float GetSpeed()
     {
-        float nearestDis = GroupMod.Instance.GetNearestSheep();
+        float nearestDis = groupMod.GetNearestSheep();
         if (nearestDis < Config.R_a * 3)
         {
             return Config.shephardSpeed / 2;
@@ -87,7 +92,7 @@ public class Shepherd : MonoBehaviour
 
     private Action GetAction()
     {
-        if (GroupMod.Instance.WithinGCM())
+        if (groupMod.WithinGCM())
         {
             return Action.Driving;
         }
