@@ -5,14 +5,38 @@
 public class Config
 {
 
+    #region 初始化位置信息
+
+    /// <summary>
+    /// 地图宽度
+    /// </summary>
+    public static float MapWidth = 150f;
+    /// <summary>
+    /// 地图高度
+    /// </summary>
+    public static float MapLength = 75f;
+
+    /// <summary>
+    /// 牧羊犬位置
+    /// </summary>
+    public static Vector3 shepherdPos = new Vector3(60, 60, 0);
+    /// <summary>
+    /// 目标点位置
+    /// </summary>
+    public static Vector3 targetPos = new Vector3(-60, 60, 0);
+    /// <summary>
+    /// 羊只生成点位置
+    /// </summary>
+    public static Vector2 bornPos = Vector2.zero;
+
+    #endregion
+
     #region 羊群相关参数
 
     /// <summary>
     /// 地图宽度
     /// </summary>
     public static float L = 150f;
-
-    public static Vector2 bornPoint = Vector2.zero;
 
     public static float bornRange = 20.0f;
 
@@ -95,8 +119,21 @@ public class Config
     public static float beta = 180;
     #endregion
 
-    #region
+    #region 功能参数
+    /// <summary>
+    /// 是否使用机器学习代理
+    /// </summary>
     public static bool useML = false;
+
+    /// <summary>
+    /// 是否使用噪音
+    /// </summary>
+    public static bool useNoise = true;
+
+    /// <summary>
+    /// 是否显示移动轨迹
+    /// </summary>
+    public static bool showLocus = false;
 
     #endregion
 }

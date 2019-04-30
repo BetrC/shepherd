@@ -1,12 +1,15 @@
 ﻿using NumSharp;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 保存一些全局方法
 /// </summary>
-class Function
+class Global
 {
+
+    #region NumSharp的一些矩阵运算方法   不可用
     /// <summary>
     /// 将vector3坐标转化为 1×2 NDArray矩阵
     /// </summary>
@@ -95,6 +98,31 @@ class Function
         }
         var mean = new NDArray(puffer, new Shape(1, nd.shape[1]));
         return mean;
-
     }
+    #endregion
+
+    #region UI相关的一些方法
+
+    /// <summary>
+    /// 根据路径获取Slider组件
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static Slider GetSlider(string path)
+    {
+        return GameObject.Find(path + "/Slider").GetComponent<Slider>();
+    }
+
+    /// <summary>
+    /// 根据路径获取开关组件
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public static Toggle GetToggle(string path)
+    {
+        return GameObject.Find(path + "/Toggle").GetComponent<Toggle>();
+    }
+
+
+    #endregion
 }

@@ -16,7 +16,7 @@ public class Sheep : MonoBehaviour
 
     public void MatAction(NDArray nd)
     {
-        transform.position = Function.NDArrayToVec3(nd);
+        transform.position = Global.NDArrayToVec3(nd);
     }
 
     ///// <summary>

@@ -27,5 +27,12 @@
 
         // 重定位牧羊犬位置
         Generator.Instance.ReSet();
+        Generator.Instance.shepherd.GetComponent<DrawLocus>().Reset();
+    }
+
+    public void ReSet()
+    {
+        groupMod.ReInit();
+        Generator.Instance.ReSet();
     }
 }

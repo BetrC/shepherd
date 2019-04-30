@@ -29,7 +29,7 @@ public class MatShepherd : MonoBehaviour
         groupMod = MatGroupMod.Instance;
         generator = Generator.Instance;
 
-        double[] arr = Function.Vec3ToArray(transform.position);
+        double[] arr = Global.Vec3ToArray(transform.position);
         pos = new NDArray(arr, new Shape(1, 2));
     }
 
@@ -73,9 +73,9 @@ public class MatShepherd : MonoBehaviour
     private NDArray DrivingPosition()
     {
         NDArray GCM = groupMod.GetGCM();
-        NDArray target = new NDArray(Function.Vec3ToArray(generator.targetPoint), new Shape(1, 2));
+        NDArray target = new NDArray(Global.Vec3ToArray(Config.targetPos), new Shape(1, 2));
         NDArray vec = GCM - target;
-        Function.Normalize(vec);
+        Global.Normalize(vec);
         return GCM + vec * (2 * Config.R_a * Mathf.Sqrt(Config.N));
     }
 
@@ -89,7 +89,7 @@ public class MatShepherd : MonoBehaviour
         NDArray furthest = groupMod.GetFurthestSheep();
         NDArray GCM = groupMod.GetGCM();
         NDArray vec = furthest - GCM;
-        Function.Normalize(vec);
+        Global.Normalize(vec);
         return furthest + vec * Config.R_a;
     }
 
@@ -146,11 +146,11 @@ public class MatShepherd : MonoBehaviour
             NDArray Pd = DrivingPosition();
             H = Pd - pos;
         }
-        Function.Normalize(H);
+        Global.Normalize(H);
         H += Inertia * Config.h + Config.e * GetNoise();
-        Function.Normalize(H);
+        Global.Normalize(H);
         Inertia = H;
         pos += GetSpeed() * H;
-        transform.position = Function.NDArrayToVec3(pos);
+        transform.position = Global.NDArrayToVec3(pos);
     }
 }

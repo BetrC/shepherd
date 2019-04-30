@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
@@ -37,11 +36,11 @@ class GroupMod : UnitySingleton<GroupMod>
     private void FixedUpdate()
     {
         // 性能统计
-        var watch = Stopwatch.StartNew();
+        //var watch = Stopwatch.StartNew();
         var matH = GetH();
-        watch.Stop();
-        var elapsed = watch.Elapsed;
-        UnityEngine.Debug.Log(elapsed);
+        //watch.Stop();
+        //var elapsed = watch.Elapsed;
+        //UnityEngine.Debug.Log(elapsed);
         for (int i = 0; i < sheeps.Count; i++)
         {
             objs[i].GetComponent<Sheep>().Action(matH[i]);
@@ -56,8 +55,8 @@ class GroupMod : UnitySingleton<GroupMod>
         for (int i = 0; i < Config.N; i++)
         {
             // 生成羊只
-            float x = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPoint.x;
-            float y = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPoint.y;
+            float x = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPos.x;
+            float y = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPos.y;
             GameObject go = Instantiate(prefab, new Vector3(x, y, 0), Quaternion.identity);
             go.name = "" + i;
             sheeps.Add(new Vector2(x, y));
@@ -69,10 +68,10 @@ class GroupMod : UnitySingleton<GroupMod>
     {
         List<Vector2> matH = Enumerable.Repeat(Vector2.zero, sheeps.Count).ToList();
 
-        this.matS = GetS();
-        this.matA = GetA();
-        this.matC = GetC();
-        this.matNoise = GetNoise();
+        matS = GetS();
+        matA = GetA();
+        matC = GetC();
+        matNoise = GetNoise();
 
         for (int i = 0; i < sheeps.Count; i++)
         {
@@ -265,11 +264,39 @@ class GroupMod : UnitySingleton<GroupMod>
         // 重定位羊群位置
         for (int i = 0; i < Config.N; i++)
         {
-            float x = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPoint.x;
-            float y = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPoint.y;
+            float x = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPos.x;
+            float y = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPos.y;
             objs[i].transform.position = new Vector3(x, y, 0);
         }
         time = 0;
+    }
+
+    public void ReInit()
+    {
+        DestroyObjs();
+        sheeps = new List<Vector2>();
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/sheep") as GameObject;
+        for (int i = 0; i < Config.N; i++)
+        {
+            // 生成羊只
+            float x = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPos.x;
+            float y = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPos.y;
+            GameObject go = Instantiate(prefab, new Vector3(x, y, 0), Quaternion.identity);
+            go.name = "" + i;
+            sheeps.Add(new Vector2(x, y));
+            objs.Add(go);
+
+            time = 0;
+        }
+    }
+
+    public void DestroyObjs()
+    {
+        for (int i = 0; i < objs.Count; i++)
+        {
+            Destroy(objs[i]);
+        }
+        objs = new List<GameObject>();
     }
 }
 

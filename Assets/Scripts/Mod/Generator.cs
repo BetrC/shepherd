@@ -2,9 +2,6 @@
 
 public class Generator : UnitySingleton<Generator>
 {
-    public Vector3 shepherdPoint = new Vector3(60, 60, 0);
-    public Vector3 targetPoint = new Vector3(-60, 60, 0);
-
     /// <summary>
     /// 牧羊犬对象
     /// </summary>
@@ -22,15 +19,17 @@ public class Generator : UnitySingleton<Generator>
 
         // 添加目标点
         GameObject go = Resources.Load<GameObject>("Prefabs/target") as GameObject;
-        target = Instantiate(go, targetPoint, Quaternion.identity);
+        target = Instantiate(go, Config.targetPos, Quaternion.identity);
 
         // 添加牧羊犬
         go = AgentFactory.GetAgent();
-        shepherd = Instantiate(go, shepherdPoint, Quaternion.identity);
+        shepherd = Instantiate(go, Config.shepherdPos, Quaternion.identity);
     }
 
     public void ReSet()
     {
-        shepherd.transform.position = shepherdPoint;
+        shepherd.transform.position = Config.shepherdPos;
+        target.transform.position = Config.targetPos;
     }
+
 }

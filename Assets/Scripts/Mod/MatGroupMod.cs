@@ -61,7 +61,7 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
         GameObject prefab = Resources.Load<GameObject>("Prefabs/sheep") as GameObject;
         for (int i = 0; i < sheeps.shape[0]; i++)
         {
-            GameObject go = Instantiate(prefab, Function.NDArrayToVec3(sheeps[i]), Quaternion.identity);
+            GameObject go = Instantiate(prefab, Global.NDArrayToVec3(sheeps[i]), Quaternion.identity);
             go.name = "" + i;
             objs.Add(go);
         }
@@ -80,7 +80,7 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
         NDArray matH = np.zeros(sheeps.shape);
         matS = GetS();
         matH = Config.Ro_s * matS + Config.e * GetNoise() + Config.c * GetC() + Config.Ro_a * GetA();
-        Function.Normalize(matH);
+        Global.Normalize(matH);
         return matH;
     }
 
@@ -95,7 +95,7 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
             return np.zeros(sheeps.shape);
         }
         var temp = generator.shepherd.GetComponent<MatShepherd>().pos;
-        var matShepherd = Function.Duplicate(temp, sheeps.shape[0]);
+        var matShepherd = Global.Duplicate(temp, sheeps.shape[0]);
         var sub = sheeps - matShepherd;
         var matS = Adjust(sub, Config.R_s);
         return matS;
@@ -107,21 +107,21 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
         for (int i = 0; i < sheeps.shape[0]; i++)
         {
             NDArray temp = new NDArray(sheeps[i].Array as double[], new Shape(1, 2));
-            var matTemp = Function.Duplicate(temp, sheeps.shape[0]);
+            var matTemp = Global.Duplicate(temp, sheeps.shape[0]);
             var sub = matTemp - sheeps;
             var arr = AdjustWithCal(sub, Config.R_a);
             (matA[i, 0], matA[i, 1]) = (arr[0], arr[1]);
         }
-        Function.Normalize(matA);
+        Global.Normalize(matA);
         return matA;
     }
 
     private NDArray GetC()
     {
-        NDArray GCM = Function.Mean(sheeps);
-        NDArray matGCM = Function.Duplicate(GCM, sheeps.shape[0]);
+        NDArray GCM = Global.Mean(sheeps);
+        NDArray matGCM = Global.Duplicate(GCM, sheeps.shape[0]);
         NDArray sub = matGCM - sheeps;
-        Function.Normalize(sub);
+        Global.Normalize(sub);
 
         // 当有羊狼排斥力的时候才会有中心力
         foreach (var i in indexs)
@@ -149,7 +149,7 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
 
     public NDArray GetGCM()
     {
-        return Function.Mean(sheeps);
+        return Global.Mean(sheeps);
     }
 
     private void RefreshSheeps()
@@ -170,9 +170,9 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
     public bool IsTargetOK()
     {
         NDArray temp = GetGCM();
-        Vector3 GCM = Function.NDArrayToVec3(temp);
+        Vector3 GCM = Global.NDArrayToVec3(temp);
         // 5是一个暂定参数
-        if ((GCM - generator.targetPoint).magnitude <= 5)
+        if ((GCM - Config.targetPos).magnitude <= 5)
         {
             return true;
         }
@@ -185,7 +185,7 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
         float fn = Config.R_a * Mathf.Sqrt(Config.N);
         for (int i = 0; i < sheeps.shape[0]; i++)
         {
-            if (Function.NDArrayToVec3(GCM[0] - sheeps[i]).magnitude > fn)
+            if (Global.NDArrayToVec3(GCM[0] - sheeps[i]).magnitude > fn)
             {
                 return false;
             }
@@ -204,7 +204,7 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
         NDArray GCM = GetGCM();
         for (int i = 0; i < sheeps.shape[0]; i++)
         {
-            float d = Function.NDArrayToVec3(GCM[0] - sheeps[i]).magnitude;
+            float d = Global.NDArrayToVec3(GCM[0] - sheeps[i]).magnitude;
             if (d > max)
             {
                 (furthest[0, 0], furthest[0, 1]) = (sheeps[i, 0], sheeps[i, 1]);
@@ -224,7 +224,7 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
         NDArray shepherd = generator.shepherd.GetComponent<MatShepherd>().pos;
         for (int i = 0; i < sheeps.shape[0]; i++)
         {
-            float d = Function.NDArrayToVec3(shepherd[0] - sheeps[i]).magnitude;
+            float d = Global.NDArrayToVec3(shepherd[0] - sheeps[i]).magnitude;
             if (d < min)
             {
                 min = d;
@@ -240,11 +240,11 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
         indexs.Clear();
         for (int i = 0; i < nd.shape[0]; i++)
         {
-            Vector3 vec = Function.NDArrayToVec3(nd[i]);
+            Vector3 vec = Global.NDArrayToVec3(nd[i]);
             if (vec.magnitude < dis)
             {
                 vec.Normalize();
-                double[] arr = Function.Vec3ToArray(vec);
+                double[] arr = Global.Vec3ToArray(vec);
                 (res[i, 0], res[i, 1]) = (arr[0], arr[1]);
             }
             else
@@ -267,11 +267,11 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
         int count = 0;
         for (int i = 0; i < nd.shape[0]; i++)
         {
-            Vector3 vec = Function.NDArrayToVec3(nd[i]);
+            Vector3 vec = Global.NDArrayToVec3(nd[i]);
             if (vec.magnitude < dis)
             {
                 vec.Normalize();
-                double[] arr = Function.Vec3ToArray(vec);
+                double[] arr = Global.Vec3ToArray(vec);
                 puffer[0] += arr[0];
                 puffer[1] += arr[1];
                 count++;
@@ -291,7 +291,7 @@ public class MatGroupMod : UnitySingleton<MatGroupMod>
 
         for (int i = 0; i < sheeps.shape[0]; i++)
         {
-            objs[i].transform.position = Function.NDArrayToVec3(sheeps[i]);
+            objs[i].transform.position = Global.NDArrayToVec3(sheeps[i]);
         }
     }
 }

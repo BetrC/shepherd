@@ -19,13 +19,11 @@ public class Shepherd : MonoBehaviour
     void Start()
     {
         groupMod = GroupMod.Instance;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        // KeyController();
-
         AutoMove();
     }
 
@@ -57,7 +55,7 @@ public class Shepherd : MonoBehaviour
     private Vector2 DrivingPosition()
     {
         Vector2 GCM = groupMod.GetGCM();
-        Vector2 target = Generator.Instance.targetPoint;
+        Vector2 target = new Vector3(Config.targetPos.x, Config.targetPos.y);
         Vector2 vec = GCM - target;
         vec.Normalize();
 
@@ -131,7 +129,13 @@ public class Shepherd : MonoBehaviour
             H = Pd - new Vector2(transform.position.x, transform.position.y);
         }
         H.Normalize();
-        H += Inertia * Config.h + Config.e * GetNoise();
+        H += Inertia * Config.h;
+
+        if (Config.useNoise)
+        {
+            H += Config.e * GetNoise();
+        }
+
         H.Normalize();
         Inertia = H;
 

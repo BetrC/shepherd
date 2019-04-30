@@ -15,8 +15,8 @@ public class ShepherdAgent : Agent
     public override void InitializeAgent()
     {
         groupMod = GroupMod.Instance;
-        target = new Vector2(Generator.Instance.targetPoint.x, Generator.Instance.targetPoint.y);
-        lastDis = (target - Config.bornPoint).magnitude;
+        target = new Vector2(Config.targetPos.x, Config.targetPos.y);
+        lastDis = (target - Config.bornPos).magnitude;
     }
 
     public override void CollectObservations()
@@ -74,6 +74,6 @@ public class ShepherdAgent : Agent
         // 重定位牧羊犬位置
         transform.position = shepherdPoint;
 
-        lastDis = (target - Config.bornPoint).magnitude;
+        lastDis = (target - Config.bornPos).magnitude;
     }
 }

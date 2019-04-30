@@ -64,11 +64,11 @@ class Test
         int[] size = { 3, 2 };
         var nd = new NumPyRandom().normal(0.0, 20, size);
         Debug.Log(nd);
-        var mean = Function.Mean(nd);
+        var mean = Global.Mean(nd);
         Debug.Log(mean);
         ////////////////////////////////////Test Mean()////////////////////////////////////////
 
-        Vector3 GCM = Function.NDArrayToVec3(mean);
+        Vector3 GCM = Global.NDArrayToVec3(mean);
         Debug.Log(GCM);
 
 

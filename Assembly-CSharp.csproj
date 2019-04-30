@@ -178,11 +178,12 @@
     <Compile Include="Assets\Scripts\Agent\Shepherd.cs" />
     <Compile Include="Assets\Scripts\Config\Action.cs" />
     <Compile Include="Assets\Scripts\Config\Config.cs" />
-    <Compile Include="Assets\Scripts\Function.cs" />
+    <Compile Include="Assets\Scripts\Global.cs" />
     <Compile Include="Assets\Scripts\ML\ShepherdAcademy.cs" />
     <Compile Include="Assets\Scripts\ML\ShepherdAgent.cs" />
     <Compile Include="Assets\Scripts\Mod\AgentFactory.cs" />
     <Compile Include="Assets\Scripts\Mod\BaseMod.cs" />
+    <Compile Include="Assets\Scripts\Mod\DrawLocus.cs" />
     <Compile Include="Assets\Scripts\Mod\Generator.cs" />
     <Compile Include="Assets\Scripts\Mod\GroupMod.cs" />
     <Compile Include="Assets\Scripts\Mod\Manager.cs" />
@@ -190,6 +191,12 @@
     <Compile Include="Assets\Scripts\Mod\SheepGroup.cs" />
     <Compile Include="Assets\Scripts\Mod\UnitySingleton.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
+    <Compile Include="Assets\Scripts\UI\UIBase.cs" />
+    <Compile Include="Assets\Scripts\UI\UIInputMgr.cs" />
+    <Compile Include="Assets\Scripts\UI\UIMain.cs" />
+    <Compile Include="Assets\Scripts\UI\UISetting.cs" />
+    <Compile Include="Assets\Scripts\UI\UISliderMgr.cs" />
+    <Compile Include="Assets\Scripts\UI\UIToggleMgr.cs" />
     <None Include="Assets\ML\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\Experimental.compute" />
     <None Include="Assets\ML\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\Conv.compute" />
     <None Include="Assets\ML\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\Random.cginc" />

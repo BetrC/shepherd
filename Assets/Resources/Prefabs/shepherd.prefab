@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8648047898631898779}
   - component: {fileID: 2407148086685059261}
   - component: {fileID: 7400500745454014492}
+  - component: {fileID: 3481962147330321677}
   m_Layer: 0
   m_Name: shepherd
   m_TagString: agent
@@ -92,3 +93,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a16ecbb9a6ef940488125b54b07572ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3481962147330321677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536923801461631334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de4d4e9097c34f46b1ebd5473af98d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 0}
+  index: 0
+  length: 0
