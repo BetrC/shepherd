@@ -569,7 +569,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sheeps: []
   objs: []
-  time: 0
 --- !u!1 &702760134
 GameObject:
   m_ObjectHideFlags: 0
@@ -643,8 +642,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702760134}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0017, y: -0.44, z: 10}
-  m_LocalScale: {x: 38.55537, y: 19.309753, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 38.56502, y: 19.26198, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1

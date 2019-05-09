@@ -46,19 +46,18 @@ public class Config
     public static int N = 46;
 
     /// <summary>
-    /// 所使用最近邻居数量参数(1-200)
-    /// </summary>
-    public static int n = 20;
-
-    /// <summary>
     /// 牧羊犬检测距离
     /// </summary>
-    public static float R_s = 65f;
+    public static float R_s = 60f;
 
     /// <summary>
     /// 羊群间交互距离
+    /// 依据为羊只半径为1.5单位，取直径稍大点的值
     /// </summary>
-    public static float R_a = 3f;
+    public static float R_a = 3.2f;
+
+
+    // 三种力之间的关系为 Ro_a > c > Ro_s
 
     /// <summary>
     /// 来自另一个代理人的相对排斥力
@@ -133,7 +132,11 @@ public class Config
     /// <summary>
     /// 是否显示移动轨迹
     /// </summary>
-    public static bool showLocus = false;
+    public static bool showLocus = true;
+
+    public static bool useStatistical = false;
+
+    public static bool randomBorn = true;
 
     #endregion
 }

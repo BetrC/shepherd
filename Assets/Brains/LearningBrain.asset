@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LearningBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 6
+    vectorObservationSize: 8
     numStackedVectorObservations: 1
     vectorActionSize: 03000000
     cameraResolutions: []

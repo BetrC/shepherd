@@ -343,9 +343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43e4ecc47fcf51a41805f216dd75c4b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sheeps: []
-  Objs: []
-  time: 0
+  sheeps: []
+  objs: []
 --- !u!1 &702760134
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,7 +569,7 @@ MonoBehaviour:
     width: 1600
     height: 900
     qualityLevel: 1
-    timeScale: 100
+    timeScale: 10
     targetFrameRate: -1
   inferenceConfiguration:
     width: 1600

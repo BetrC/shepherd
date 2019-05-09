@@ -129,7 +129,11 @@ public class Shepherd : MonoBehaviour
             H = Pd - new Vector2(transform.position.x, transform.position.y);
         }
         H.Normalize();
-        H += Inertia * Config.h;
+
+        Vector2 repulsion = transform.position - Config.targetPos;
+        repulsion.Normalize();
+
+        H += Inertia * Config.h + repulsion * 0.5f;
 
         if (Config.useNoise)
         {

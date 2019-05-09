@@ -5,6 +5,7 @@ using UnityEngine;
 
 /// <summary>
 /// 使用矩阵运算的羊群控制代码
+/// 不可用
 /// </summary>
 public class MatGroupMod : UnitySingleton<MatGroupMod>
 {

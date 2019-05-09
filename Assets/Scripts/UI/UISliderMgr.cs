@@ -78,7 +78,6 @@ public class UISliderMgr : UIBase
         sheepSpeed.value = Config.sheepSpeed;
     }
 
-
     public void ValueChange(ref float target, Slider slider)
     {
         target = slider.value;

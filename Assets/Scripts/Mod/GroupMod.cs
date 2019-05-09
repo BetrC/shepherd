@@ -16,9 +16,6 @@ class GroupMod : UnitySingleton<GroupMod>
     private List<Vector2> matC;
     private List<Vector2> matNoise;
 
-
-    public float time = 0;
-
     private void Start()
     {
         UnityEngine.Debug.Log("开始生成羊群");
@@ -31,6 +28,11 @@ class GroupMod : UnitySingleton<GroupMod>
             objs = new List<GameObject>();
         }
         Init();
+
+        if (Config.useStatistical)
+        {
+            Statistical.Instance.UpdateLength();
+        }
     }
 
     private void FixedUpdate()
@@ -46,7 +48,6 @@ class GroupMod : UnitySingleton<GroupMod>
             objs[i].GetComponent<Sheep>().Action(matH[i]);
             sheeps[i] = new Vector2(objs[i].transform.position.x, objs[i].transform.position.y);
         }
-        time += Time.fixedDeltaTime;
     }
 
     private void Init()
@@ -114,9 +115,9 @@ class GroupMod : UnitySingleton<GroupMod>
             foreach (var s in sheeps)
             {
                 Vector2 vec = sheeps[i] - s;
-                if (vec.magnitude < Config.R_a)
+                if (vec.magnitude < Config.R_a && vec.magnitude != 0)
                 {
-                    temp.Add(vec);
+                    temp.Add(vec / (vec.magnitude * vec.magnitude));
                 }
             }
             matA[i] = Mean(temp);
@@ -145,6 +146,10 @@ class GroupMod : UnitySingleton<GroupMod>
     {
         // 噪声以一定概率出现
         var matNoise = Enumerable.Repeat(Vector2.zero, sheeps.Count).ToList();
+        if (!Config.useNoise)
+        {
+            return matNoise;
+        }
         for (int i = 0; i < sheeps.Count; i++)
         {
             float p = Random.Range(0.0f, 1.0f);
@@ -199,7 +204,6 @@ class GroupMod : UnitySingleton<GroupMod>
         Vector3 temp = Generator.Instance.target.transform.position;
         Vector2 vec = new Vector2(temp.x, temp.y);
 
-        // 5是一个暂定参数
         if ((GCM - vec).magnitude <= 5)
         {
             return true;
@@ -268,7 +272,6 @@ class GroupMod : UnitySingleton<GroupMod>
             float y = Random.Range(-Config.bornRange, Config.bornRange) + Config.bornPos.y;
             objs[i].transform.position = new Vector3(x, y, 0);
         }
-        time = 0;
     }
 
     public void ReInit()
@@ -285,8 +288,6 @@ class GroupMod : UnitySingleton<GroupMod>
             go.name = "" + i;
             sheeps.Add(new Vector2(x, y));
             objs.Add(go);
-
-            time = 0;
         }
     }
 

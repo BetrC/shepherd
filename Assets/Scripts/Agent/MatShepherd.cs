@@ -1,6 +1,11 @@
 using NumSharp;
 using UnityEngine;
 
+
+/// <summary>
+/// 对于矩阵运算的尝试
+/// 不可用
+/// </summary>
 public class MatShepherd : MonoBehaviour
 {
 

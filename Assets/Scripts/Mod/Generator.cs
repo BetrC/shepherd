@@ -17,6 +17,11 @@ public class Generator : UnitySingleton<Generator>
     {
         // 生成羊群,已在SheepGroup类中实现
 
+        if (Config.randomBorn)
+        {
+            RandomBorn();
+        }
+
         // 添加目标点
         GameObject go = Resources.Load<GameObject>("Prefabs/target") as GameObject;
         target = Instantiate(go, Config.targetPos, Quaternion.identity);
@@ -28,8 +33,31 @@ public class Generator : UnitySingleton<Generator>
 
     public void ReSet()
     {
+        if (Config.randomBorn)
+        {
+            RandomBorn();
+        }
         shepherd.transform.position = Config.shepherdPos;
         target.transform.position = Config.targetPos;
     }
 
+
+    /// <summary>
+    /// 随机生成位置
+    /// </summary>
+    public void RandomBorn()
+    {
+        Config.targetPos = new Vector3(GenerateRandomX(), GenerateRandomY(), 0);
+        Config.shepherdPos = new Vector3(GenerateRandomX(), GenerateRandomY(), 0);
+    }
+
+    private float GenerateRandomX()
+    {
+        return Random.Range(-Config.MapWidth, Config.MapWidth);
+    }
+
+    private float GenerateRandomY()
+    {
+        return Random.Range(-Config.MapLength, Config.MapLength);
+    }
 }
